@@ -3,9 +3,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<meta charset="ISO-8859-1">
+<title>balance</title>
 </head>
 <body>
-	<h1>Login fails</h1>
+	<%
+		int bal = (int) session.getAttribute("BALANCE");
+		out.println("Your Balance :" + bal);
+	%>
 </body>
 </html>

@@ -5,9 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import oracle.jdbc.driver.OracleDriver;
 
+/**
+ * DB activity for Login verification
+ *
+ */
 public class Model {
 	private int accno;
 	private String custid;
@@ -94,10 +99,69 @@ public class Model {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		return false;
 
 	}
 
+	public boolean checkBalance() {
+		try {
+			pstmt = con.prepareStatement("SELECT BALANCE FROM BANK WHERE ACCNO=?");
+			pstmt.setInt(1, accno);
+			res = pstmt.executeQuery();
+			if (res.next() == true) {
+				balance = res.getInt("BALANCE");
+				return true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public boolean transfer(int toAmnt, int toAccno) {
+		try {
+			pstmt = con.prepareStatement("UPDATE BANK SET BALANCE=BALANCE-? WHERE ACCNO=?");
+			pstmt.setInt(1, toAmnt);
+			pstmt.setInt(2, accno);
+			int rowCount = pstmt.executeUpdate();
+
+			pstmt = con.prepareStatement("INSERT INTO BANK_STMT VALUES(?,?,?)");
+			pstmt.setInt(1, accno);
+			pstmt.setInt(2, toAccno);
+			pstmt.setInt(3, toAmnt);
+			pstmt.executeUpdate();
+
+			if (rowCount != 0) {
+				return true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public ArrayList getStatemnet() {
+		ArrayList al = new ArrayList();
+
+		try {
+			pstmt = con.prepareStatement("SELECT * FROM BANK_STMT WHERE FROM_ACCNO=?");
+			pstmt.setInt(1, accno);
+			res = pstmt.executeQuery();
+
+			while (res.next() == true) {
+				System.out.println(res.getInt("TO_ACCNO") + " " + res.getInt("AMNT"));
+				al.add(res.getInt("TO_ACCNO") + " " + res.getInt("AMNT"));
+
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return al;
+
+	}
 }

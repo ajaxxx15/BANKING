@@ -3,9 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="ISO-8859-1">
 <title>Insert title here</title>
 </head>
 <body>
-	<h1>Login fails</h1>
+	<h1>Transfer Successful</h1>
 </body>
 </html>

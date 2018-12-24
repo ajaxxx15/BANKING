@@ -10,31 +10,28 @@ import javax.servlet.http.HttpSession;
 import com.abc.model.Model;
 
 /**
- * Login page Controller
- *
+ * Servlet implementation class Balance
  */
-public class Home extends HttpServlet {
+public class Balance extends HttpServlet {
 	public void service(HttpServletRequest x, HttpServletResponse y) {
-		String custid = x.getParameter("custid");
-		String pwd = x.getParameter("pwd");
-
 		Model m = new Model();
-		m.setCustid(custid);
-		m.setPwd(pwd);
-
-		if (m.login() == true) {
-			int accno = m.getAccno();
-			HttpSession session = x.getSession(true);
-			session.setAttribute("ACCNO", accno);
+		HttpSession session = x.getSession();
+		int accno = (int) session.getAttribute("ACCNO");
+		m.setAccno(accno);
+		if (m.checkBalance() == true) {
+			int bal = m.getBalance();
+			session.setAttribute("BALANCE", bal);
 			try {
-				y.sendRedirect("/BANKING/home.jsp");
+				y.sendRedirect("/BANKING/balancesuccess.jsp");
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} else {
 			try {
-				y.sendRedirect("/BANKING/loginfail.jsp");
+				y.sendRedirect("BANKING/loginfail.jsp");
 			} catch (IOException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

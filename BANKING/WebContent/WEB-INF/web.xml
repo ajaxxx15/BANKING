@@ -15,8 +15,42 @@
 		<servlet-name>Home</servlet-name>
 		<servlet-class>com.abc.controller.Home</servlet-class>
 	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>Balance</display-name>
+		<servlet-name>Balance</servlet-name>
+		<servlet-class>com.abc.controller.Balance</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>Transfer</display-name>
+		<servlet-name>Transfer</servlet-name>
+		<servlet-class>com.abc.controller.Transfer</servlet-class>
+	</servlet>
+	<servlet>
+		<description>
+		</description>
+		<display-name>GetStatement</display-name>
+		<servlet-name>GetStatement</servlet-name>
+		<servlet-class>com.abc.controller.GetStatement</servlet-class>
+	</servlet>
+
 	<servlet-mapping>
 		<servlet-name>Home</servlet-name>
 		<url-pattern>/Home</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Balance</servlet-name>
+		<url-pattern>/Balance</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Transfer</servlet-name>
+		<url-pattern>/Transfer</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GetStatement</servlet-name>
+		<url-pattern>/GetStatement</url-pattern>
 	</servlet-mapping>
 </web-app>

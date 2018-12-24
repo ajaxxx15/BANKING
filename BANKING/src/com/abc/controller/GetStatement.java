@@ -1,7 +1,9 @@
 package com.abc.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,34 +12,33 @@ import javax.servlet.http.HttpSession;
 import com.abc.model.Model;
 
 /**
- * Login page Controller
- *
+ * Servlet implementation class Statement
  */
-public class Home extends HttpServlet {
+public class GetStatement extends HttpServlet {
 	public void service(HttpServletRequest x, HttpServletResponse y) {
-		String custid = x.getParameter("custid");
-		String pwd = x.getParameter("pwd");
+		HttpSession session = x.getSession();
+		int accno = (int) session.getAttribute("ACCNO");
+		ArrayList al = new ArrayList();
 
 		Model m = new Model();
-		m.setCustid(custid);
-		m.setPwd(pwd);
+		m.setAccno(accno);
 
-		if (m.login() == true) {
-			int accno = m.getAccno();
-			HttpSession session = x.getSession(true);
-			session.setAttribute("ACCNO", accno);
+		al = m.getStatemnet();
+
+		if (al != null) {
+			session.setAttribute("STMT", al);
 			try {
-				y.sendRedirect("/BANKING/home.jsp");
+				y.sendRedirect("/BANKING/getstatementsuccess.jsp");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		} else {
 			try {
-				y.sendRedirect("/BANKING/loginfail.jsp");
+				y.sendRedirect("/BANKING/getstatementfail.jsp");
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
-	}
 
+	}
 }
