@@ -25,6 +25,7 @@ public class Model {
 	PreparedStatement pstmt = null;
 	ResultSet res = null;
 
+
 	public Model() {
 		super();
 		try {
@@ -98,6 +99,15 @@ public class Model {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				res.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 		return false;
@@ -115,6 +125,15 @@ public class Model {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				res.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 		return false;
@@ -139,6 +158,15 @@ public class Model {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
 		}
 
 		return false;
@@ -153,15 +181,50 @@ public class Model {
 			res = pstmt.executeQuery();
 
 			while (res.next() == true) {
-				System.out.println(res.getInt("TO_ACCNO") + " " + res.getInt("AMNT"));
+				
 				al.add(res.getInt("TO_ACCNO") + " " + res.getInt("AMNT"));
+				
 
 			}
 
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		return al;
+		} finally {
+			try {
+				pstmt.close();
+				res.close();
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 
+		}
+
+		return al;
+		
+		
 	}
+	
+	
+	
+	public boolean changePassword(String npwd) {
+		int rowcount=0;
+		try {
+			pstmt=con.prepareStatement("UPDATE BANK SET PWD=? WHERE PWD=? AND ACCNO=?");
+			pstmt.setString(1, npwd);
+			pstmt.setString(2, pwd);
+			pstmt.setInt(3, accno);
+			rowcount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if(rowcount==1) {
+			return true;
+		}
+		return false;
+	}
+
+	
+	
 }

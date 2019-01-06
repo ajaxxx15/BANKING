@@ -12,13 +12,21 @@
 	<%
 		ArrayList al = new ArrayList();
 		al.add(session.getAttribute("STMT"));
-		Iterator itr = al.iterator();
+		/*Iterator itr = al.iterator();
 
 		while (itr.hasNext() == true) {
-			out.println(itr.next());
-			out.println("<BR>");
-
-		}
+			out.println(itr.next()+"\n");
+			out.println("<BR>");*/
+			Object []a = new Object[al.size()];
+			
+			for(int i=0;i<al.size();i++){
+				a[i] = al.get(i);
+			}
+			for(Object i:a)
+			{
+				out.println(i);
+			}
+		
 	%>
 </body>
 </html>

@@ -15,5 +15,12 @@
 	<br>
 	<a href="GetStatement">Get Statement</a>
 	<br>
+	<a href="applyloan.jsp">Apply Loan</a>
+	<br>
+	<a href="changepassword.jsp">Change Password</a>
+	<br>
+	<a href="logout.jsp">Log Out</a>
+	<br>
+	
 </body>
 </html>
